@@ -1,0 +1,93 @@
+.hidden {
+  display: none;
+}
+
+.select-wrapper {
+  display: grid;
+  gap: 1px;
+  position: relative;
+  width: 100%;
+  min-width: 150px;
+  font-size: 16px;
+  color: #333;
+  font-size: 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+.select-wrapper select {
+  appearance: none;
+  width: 100%;
+  padding: 6px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat, repeat;
+  background-position:
+    right 0.7em top 50%,
+    0 0;
+  background-size:
+    1em auto,
+    100%;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.select-wrapper select:focus-visible {
+  outline: none;
+}
+
+.select-wrapper:has(datalist.opened) select {
+  border-radius: 3px 3px 0 0;
+}
+
+.select-wrapper datalist {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  max-height: 0px;
+  overflow: hidden;
+  background-color: white;
+  overflow: scroll;
+  transition: max-height 200ms ease-in-out;
+}
+
+.select-wrapper datalist.opened {
+  max-height: 286px;
+}
+
+.select-wrapper datalist option {
+  cursor: pointer;
+  padding: 6px;
+  margin: 4px;
+  border-radius: 3px;
+  text-align: left;
+}
+
+.select-wrapper datalist option.active,
+.select-wrapper datalist option:hover {
+  background-color: lightslategrey;
+  color: white;
+}
+
+.select-wrapper datalist .search-wrapper {
+  position: sticky;
+  top: 0;
+  background-color: inherit;
+  width: 100%;
+  display: flex;
+  gap: 2px;
+  border-bottom: 1px solid #ccc;
+  padding: 4px;
+}
+
+.select-wrapper datalist .search-wrapper input {
+  flex: 1;
+  background-color: inherit;
+  border: none;
+  outline: none;
+}
+
+.select-wrapper datalist .search-wrapper svg {
+  width: 24px;
+  fill: currentColor;
+  padding-inline: 3px;
+}

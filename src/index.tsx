@@ -1,0 +1,143 @@
+'use client'
+import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import clsx from 'clsx'
+import './styles.css'
+
+export type NonEmptyString<S extends string = string> = S extends '' ? never : S
+
+type UseElementsHandlerProps = {
+  onClickAway?: () => void
+  onReachThreshold?: () => void
+}
+
+type Option = {
+  label: string
+  value: React.OptionHTMLAttributes<HTMLOptionElement>['value']
+} | null
+
+type SelectProps<Name extends string> = {
+  options: Option[]
+  name: NonEmptyString<Name>
+  value?: Option
+  placeholder?: string
+  threshold?: number
+  isLoading?: true | false
+  isSearchable?: true | false
+  clearValueOnSelect?: true | false
+  onChange?: (value: Option) => void
+  onInputChange?: (value: string) => void
+  onReachThreshold?: () => void
+}
+
+const THRESHOLD = 3
+
+function useElementsHandler({ onClickAway, onReachThreshold }: UseElementsHandlerProps) {
+  const observerRef = useRef(new IntersectionObserver(() => {}))
+  const onClickAwayRef = useRef(onClickAway)
+  const onReachThresholdRef = useRef(onReachThreshold)
+
+  useLayoutEffect(() => {
+    onClickAwayRef.current = onClickAway
+    onReachThresholdRef.current = onReachThreshold
+  })
+
+  const handleItemRef = useCallback((node: HTMLOptionElement) => {
+    if (node) {
+      let callback: IntersectionObserverCallback = (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            onReachThresholdRef.current?.()
+          }
+        })
+      }
+      observerRef.current = new IntersectionObserver(callback)
+      observerRef.current.observe(node)
+    }
+  }, [])
+
+  const handleSelectRef = useCallback((node: HTMLDivElement) => {
+    if (node) {
+      const callback: EventListener = (event) => {
+        if (!node.contains(event.target as Node)) onClickAwayRef.current?.()
+      }
+      document.addEventListener('mousedown', callback)
+    }
+
+    return undefined
+  }, [])
+
+  return { handleSelectRef, handleItemRef }
+}
+
+export default function CustomSelect<Name extends string>({
+  placeholder = 'Select one',
+  value,
+  name,
+  options = [],
+  onChange,
+  onInputChange,
+  isSearchable = false,
+  isLoading = false,
+  clearValueOnSelect = false,
+  onReachThreshold,
+  threshold = THRESHOLD, // Number of items before reaching the end, default is 3
+}: SelectProps<Name>) {
+  const [selected, setSelected] = useState(value)
+  const [open, setOpen] = useState(false)
+
+  const { handleSelectRef, handleItemRef } = useElementsHandler({
+    onReachThreshold,
+    onClickAway: () => setOpen(false),
+  })
+
+  const handleChange = (value: Option) => {
+    let newValue = value
+    if (clearValueOnSelect) {
+      if (value === selected) {
+        newValue = null
+      }
+    }
+
+    setSelected(newValue)
+    onChange?.(newValue)
+
+    setOpen(false)
+  }
+
+  return (
+    <div ref={handleSelectRef} className='select-wrapper relative w-full lg:max-w-96 bg-white'>
+      <select name={name} className='select' value={selected?.value} onClick={() => setOpen(!open)}>
+        <option className='hidden' value={selected?.value}>
+          {selected?.label || placeholder}
+        </option>
+      </select>
+
+      <datalist id='select' className={clsx({ opened: open })}>
+        {isSearchable ? (
+          <div className='search-wrapper' role='option'>
+            <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='24' height='24' viewBox='0 0 24 24'>
+              <path d='M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z'></path>
+            </svg>
+
+            <input type='text' className='w-full outline-none h-10' onChange={(e) => onInputChange?.(e.target.value)} />
+          </div>
+        ) : null}
+
+        {options.map((option, i) => (
+          <option
+            ref={i === options.length - threshold ? handleItemRef : undefined}
+            key={`${option?.value}`}
+            role='option'
+            className={clsx({
+              active: selected?.value === option?.value,
+            })}
+            onClick={() => handleChange(option)}
+            onSelect={console.info}
+          >
+            {option?.label}
+          </option>
+        ))}
+      </datalist>
+    </div>
+  )
+}
