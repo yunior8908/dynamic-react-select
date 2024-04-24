@@ -101,8 +101,11 @@
   white-space: nowrap;
 }
 
-.select-wrapper ul li[role='option'].active,
 .select-wrapper ul li[role='option']:hover {
+  background-color: #f1eded;
+  color: #333;
+}
+.select-wrapper ul li[role='option'].active {
   background-color: lightslategrey;
   color: white;
 }
