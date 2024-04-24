@@ -1,6 +1,4 @@
 .select-wrapper {
-  display: grid;
-  gap: 1px;
   position: relative;
   width: 100%;
   min-width: 150px;
@@ -51,18 +49,18 @@
 }
 
 .select-wrapper datalist {
-  display: inline-block;
+  position: absolute;
+  display: block;
   width: 100%;
-  height: 100%;
-  max-height: 0px;
+  height: 0px;
   overflow: hidden;
   background-color: white;
   overflow: scroll;
-  transition: max-height 200ms ease-in-out;
+  transition: height 0.3s ease;
 }
 
 .select-wrapper datalist.opened {
-  max-height: 286px;
+  height: 286px;
 }
 
 .select-wrapper datalist option {
@@ -87,12 +85,18 @@
 .select-wrapper datalist .search-wrapper {
   position: sticky;
   top: 0;
+  display: flex;
   background-color: inherit;
   width: 100%;
-  display: flex;
   gap: 2px;
-  border-bottom: 1px solid #ccc;
+  border: 1px solid #ccc;
   padding: 4px;
+}
+
+.select-wrapper datalist .search-wrapper svg {
+  width: 24px;
+  fill: currentColor;
+  padding-inline: 3px;
 }
 
 .select-wrapper datalist .search-wrapper input {
@@ -102,21 +106,10 @@
   outline: none;
 }
 
-.select-wrapper datalist .search-wrapper svg {
-  width: 24px;
-  fill: currentColor;
-  padding-inline: 3px;
-}
-
-.select-wrapper datalist.opened.loading::after {
+.select-wrapper datalist span.opened.loading::after {
   content: '';
-  position: absolute;
-  background-color: inherit;
-  bottom: -26px;
-  left: 0;
-  right: 0;
-  display: inline-block;
   animation: dotty steps(1, end) 1.3s infinite;
+  font-size: small;
   text-align: left;
   padding: 0 6px 3px;
   color: #666666;
@@ -124,18 +117,18 @@
 
 @keyframes dotty {
   0% {
-    content: var(--loading-content, '') '.';
+    content: '.' var(--loading-content, '');
   }
   25% {
-    content: var(--loading-content, '') '.';
+    content: '.' var(--loading-content, '');
   }
   50% {
-    content: var(--loading-content, '') '..';
+    content: '..' var(--loading-content, '');
   }
   75% {
-    content: var(--loading-content, '')'...';
+    content: '...' var(--loading-content, '');
   }
   100% {
-    content: var(--loading-content, '') '';
+    content: '' var(--loading-content, '');
   }
 }

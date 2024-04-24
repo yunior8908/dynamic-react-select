@@ -153,6 +153,7 @@ export default function CustomSelect<Name extends string>({
             </svg>
 
             <input type='text' className={clsx(classes.input)} onChange={(e) => handleInputChange?.(e.target.value)} />
+            {isLoading ? <span className={clsx({ opened: open })} /> : null}
           </div>
         ) : null}
 
