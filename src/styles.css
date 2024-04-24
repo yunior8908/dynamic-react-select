@@ -1,7 +1,3 @@
-.hidden {
-  display: none;
-}
-
 .select-wrapper {
   display: grid;
   gap: 1px;
@@ -13,6 +9,10 @@
   color: #333;
   font-size: 1rem;
   font-family: system-ui, sans-serif;
+}
+
+.select-wrapper .hidden {
+  display: none;
 }
 
 .select-wrapper option {
