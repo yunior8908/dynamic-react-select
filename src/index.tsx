@@ -12,7 +12,7 @@ type UseElementsHandlerProps = {
 
 export type Option = {
   label: string
-  value: React.OptionHTMLAttributes<HTMLOptionElement>['value']
+  value: React.OptionHTMLAttributes<HTMLLIElement>['value']
 } | null
 
 type SelectProps<Name extends string> = {
@@ -51,7 +51,7 @@ function useElementsHandler({ onClickAway, onReachThreshold }: UseElementsHandle
     onReachThresholdRef.current = onReachThreshold
   })
 
-  const handleItemRef = useCallback((node: HTMLOptionElement) => {
+  const handleItemRef = useCallback((node: HTMLLIElement) => {
     if (node) {
       let callback: IntersectionObserverCallback = (entries) => {
         entries.forEach((entry) => {
@@ -145,20 +145,25 @@ export default function CustomSelect<Name extends string>({
       <style>{`:root {
         --loading-content: "${loadingLabel}"
       }`}</style>
-      <datalist id='select' className={clsx(classes.list, { opened: open, loading: isLoading })}>
+      <ul
+        role='listbox'
+        className={clsx('list-wrapper', {
+          opened: open,
+        })}
+      >
         {isSearchable ? (
-          <div className='search-wrapper' role='option'>
+          <li className='search-wrapper'>
             <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='24' height='24' viewBox='0 0 24 24'>
               <path d='M 9 2 C 5.1458514 2 2 5.1458514 2 9 C 2 12.854149 5.1458514 16 9 16 C 10.747998 16 12.345009 15.348024 13.574219 14.28125 L 14 14.707031 L 14 16 L 20 22 L 22 20 L 16 14 L 14.707031 14 L 14.28125 13.574219 C 15.348024 12.345009 16 10.747998 16 9 C 16 5.1458514 12.854149 2 9 2 z M 9 4 C 11.773268 4 14 6.2267316 14 9 C 14 11.773268 11.773268 14 9 14 C 6.2267316 14 4 11.773268 4 9 C 4 6.2267316 6.2267316 4 9 4 z'></path>
             </svg>
 
             <input type='text' className={clsx(classes.input)} onChange={(e) => handleInputChange?.(e.target.value)} />
             {isLoading ? <span className={clsx({ opened: open })} /> : null}
-          </div>
+          </li>
         ) : null}
 
         {filteredOptions.map((option, i) => (
-          <option
+          <li
             ref={i === options.length - threshold ? handleItemRef : undefined}
             key={`${option?.value}`}
             role='option'
@@ -170,9 +175,9 @@ export default function CustomSelect<Name extends string>({
             onSelect={console.info}
           >
             {option?.label}
-          </option>
+          </li>
         ))}
-      </datalist>
+      </ul>
     </div>
   )
 }

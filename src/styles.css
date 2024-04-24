@@ -9,11 +9,22 @@
   font-family: system-ui, sans-serif;
 }
 
+.select-wrapper ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.select-wrapper li {
+  cursor: pointer;
+  margin: 0;
+}
+
 .select-wrapper .hidden {
   display: none;
 }
 
-.select-wrapper option {
+.select-wrapper li {
   overflow: hidden;
 }
 
@@ -46,31 +57,38 @@
   outline: none;
 }
 
-.select-wrapper:has(datalist.opened) select {
+.select-wrapper:has(ul.opened) select {
   border-radius: 3px 3px 0 0;
 }
 
-.select-wrapper datalist {
+.select-wrapper ul.list-wrapper {
   position: absolute;
-  display: block;
-  width: 100%;
-  height: 0px;
-  overflow: hidden;
-  background-color: white;
-  overflow: scroll;
-  border-radius: 0 0 3px 3px;
+  left: 0;
+  right: 0;
+  height: 0;
+  max-height: 0;
   transition:
-    height 0.3s ease,
+    max-height 0.3s ease,
     border 0.3s ease;
 }
 
-.select-wrapper datalist.opened {
-  height: 286px;
+.select-wrapper ul {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  background-color: white;
+  overflow: scroll;
+  border-radius: 0 0 3px 3px;
+}
+
+.select-wrapper .list-wrapper.opened {
+  height: fit-content;
+  max-height: 240px;
   border: 1px solid #ccc;
   border-top: 0;
 }
 
-.select-wrapper datalist option {
+.select-wrapper ul li[role='option'] {
   cursor: pointer;
   padding: 6px;
   margin: 4px;
@@ -83,13 +101,13 @@
   white-space: nowrap;
 }
 
-.select-wrapper datalist option.active,
-.select-wrapper datalist option:hover {
+.select-wrapper ul li[role='option'].active,
+.select-wrapper ul li[role='option']:hover {
   background-color: lightslategrey;
   color: white;
 }
 
-.select-wrapper datalist .search-wrapper {
+.select-wrapper ul .search-wrapper {
   position: sticky;
   top: 0;
   display: flex;
@@ -100,20 +118,20 @@
   padding: 4px;
 }
 
-.select-wrapper datalist .search-wrapper svg {
+.select-wrapper ul .search-wrapper svg {
   width: 24px;
   fill: currentColor;
   padding-inline: 3px;
 }
 
-.select-wrapper datalist .search-wrapper input {
+.select-wrapper ul .search-wrapper input {
   flex: 1;
   background-color: inherit;
   border: none;
   outline: none;
 }
 
-.select-wrapper datalist span.opened.loading::after {
+.select-wrapper ul span.opened.loading::after {
   content: '';
   animation: dotty steps(1, end) 1.3s infinite;
   font-size: small;
