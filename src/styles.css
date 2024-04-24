@@ -8,14 +8,20 @@
   position: relative;
   width: 100%;
   min-width: 150px;
+  max-width: 300px;
   font-size: 16px;
   color: #333;
   font-size: 1rem;
   font-family: system-ui, sans-serif;
 }
 
+.select-wrapper option {
+  overflow: hidden;
+}
+
 .select-wrapper select {
   appearance: none;
+  position: relative;
   width: 100%;
   padding: 6px;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
@@ -29,6 +35,11 @@
   background-color: white;
   cursor: pointer;
   border-radius: 3px;
+  padding-right: 3em;
+  /* text ellipsis */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .select-wrapper select:focus-visible {
@@ -60,6 +71,11 @@
   margin: 4px;
   border-radius: 3px;
   text-align: left;
+
+  /* text ellipsis */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .select-wrapper datalist option.active,
@@ -90,4 +106,36 @@
   width: 24px;
   fill: currentColor;
   padding-inline: 3px;
+}
+
+.select-wrapper datalist.opened.loading::after {
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  bottom: -26px;
+  left: 0;
+  right: 0;
+  display: inline-block;
+  animation: dotty steps(1, end) 1.3s infinite;
+  text-align: left;
+  padding: 0 6px 3px;
+  color: #666666;
+}
+
+@keyframes dotty {
+  0% {
+    content: var(--loading-content, '') '.';
+  }
+  25% {
+    content: var(--loading-content, '') '.';
+  }
+  50% {
+    content: var(--loading-content, '') '..';
+  }
+  75% {
+    content: var(--loading-content, '')'...';
+  }
+  100% {
+    content: var(--loading-content, '') '';
+  }
 }
