@@ -1,14 +1,3 @@
-<style>
-    table {
-        width: 100%;
-       
-    }
-
-    thead {
-        background-color: #ccc;
-    }
-</style>
-
 # Dynamic React Select
 
 A react application
