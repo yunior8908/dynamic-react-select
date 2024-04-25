@@ -22,6 +22,10 @@ export default function App() {
         options={options}
         onChange={(value) => setValue(value)}
         onReachThreshold={() => console.info('onReachThreshold')}
+        classes={{
+          list: '!bg-red-200',
+          input: '!bg-blue-200',
+        }}
       />
       <p className='text-pretty text-left text-black'>
         "The sun hung low in the sky, casting long shadows across the deserted street. A gentle breeze rustled through
