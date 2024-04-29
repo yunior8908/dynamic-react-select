@@ -57,6 +57,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 }
 
 .select-wrapper button.select span.icon {
