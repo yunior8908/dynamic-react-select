@@ -29,7 +29,7 @@
   overflow: hidden;
 }
 
-.select-wrapper select {
+.select-wrapper button.select {
   appearance: none;
   position: relative;
   width: 100%;
@@ -52,13 +52,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: left;
 }
 
-.select-wrapper select:focus-visible {
+.select-wrapper button.select:focus-visible {
   outline: none;
 }
 
-.select-wrapper:has(ul.opened) select {
+.select-wrapper:has(ul.opened) button.select {
   border-radius: 3px 3px 0 0;
 }
 
