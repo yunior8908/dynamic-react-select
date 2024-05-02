@@ -137,7 +137,7 @@ export default function CustomSelect<Name extends string>({
   return (
     <div ref={handleSelectRef} className={clsx('select-wrapper', classes.root)}>
       <input type='hidden' name={name} value={selected?.value} />
-      <button className={clsx('select', classes.select)} role='select' onClick={() => setOpen(!open)}>
+      <button type='button' className={clsx('select', classes.select)} role='select' onClick={() => setOpen(!open)}>
         <span className='text'>
           {selected?.value === undefined && isLoading && !open ? `${loadingLabel}...` : selected?.label || placeholder}
         </span>
