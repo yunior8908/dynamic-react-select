@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import './styles.css'
 
@@ -129,6 +129,10 @@ export default function CustomSelect<Name extends string>({
 
     setOpen(false)
   }
+
+  useEffect(() => {
+    setSelected(value)
+  }, [value])
 
   return (
     <div ref={handleSelectRef} className={clsx('select-wrapper', classes.root)}>
