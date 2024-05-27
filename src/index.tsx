@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
 import './styles.css'
 
@@ -109,7 +109,14 @@ export default function CustomSelect<Name extends string>({
 
   const handleInputChange = async ? onInputChange : setFilter
 
-  const filteredOptions = options.filter((option) => option?.label.toLowerCase().includes(filter.toLowerCase()))
+  const optionsMap = useMemo(() => new Map(options?.map((option) => [option?.value, option])), [options])
+
+  const currentSelected = optionsMap.get(selected?.value)
+
+  const filteredOptions = useMemo(
+    () => options.filter((option) => option?.label.toLowerCase().includes(filter.toLowerCase())),
+    [options, filter],
+  )
 
   const { handleSelectRef, handleItemRef } = useElementsHandler({
     onReachThreshold,
@@ -119,7 +126,7 @@ export default function CustomSelect<Name extends string>({
   const handleChange = (value: Option) => {
     let newValue = value
     if (clearValueOnSelect) {
-      if (value === selected) {
+      if (value === currentSelected) {
         newValue = null
       }
     }
@@ -136,10 +143,12 @@ export default function CustomSelect<Name extends string>({
 
   return (
     <div ref={handleSelectRef} className={clsx('select-wrapper', classes.root)}>
-      <input type='hidden' name={name} value={selected?.value} />
+      <input type='hidden' name={name} value={currentSelected?.value} />
       <button type='button' className={clsx('select', classes.select)} role='select' onClick={() => setOpen(!open)}>
         <span className='text'>
-          {selected?.value === undefined && isLoading && !open ? `${loadingLabel}...` : selected?.label || placeholder}
+          {currentSelected?.value === undefined && isLoading && !open
+            ? `${loadingLabel}...`
+            : currentSelected?.label || placeholder}
         </span>
         <span className={clsx('icon', { opened: open })} />
       </button>
@@ -169,8 +178,10 @@ export default function CustomSelect<Name extends string>({
             key={`${option?.value}`}
             role='option'
             className={clsx(classes.listItem, {
-              active: selected?.value === option?.value,
-              ...(classes?.listItemActive ? { [classes.listItemActive]: selected?.value === option?.value } : {}),
+              active: currentSelected?.value === option?.value,
+              ...(classes?.listItemActive
+                ? { [classes.listItemActive]: currentSelected?.value === option?.value }
+                : {}),
             })}
             onClick={() => handleChange(option)}
             onSelect={console.info}

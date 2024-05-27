@@ -1,6 +1,6 @@
 {
   "name": "dynamic-react-select",
-  "version": "0.0.103",
+  "version": "0.0.110",
   "description": "Simple dynamic react select",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -38,7 +38,8 @@
     "@types/react": "^18.0.12",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
-    "eslint": "^8.17.0",
+    "clsx": "^2.1.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
@@ -50,7 +51,6 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "ts-jest": "^28.0.4",
-    "typescript": "^4.7.3",
-    "clsx": "^2.1.0"
+    "typescript": "^4.7.3"
   }
 }

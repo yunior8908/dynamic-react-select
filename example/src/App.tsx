@@ -1,19 +1,39 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Index, { Option } from '../../src/index'
 
 // generate a list of object value label
-const options = Array.from({ length: 33 }, (_, i) => ({
+const items = Array.from({ length: 33 }, (_, i) => ({
   value: i + 1,
   label: `Option ${i + 1} dsad adadasd sad asd as d df samf asmd,ƒ nsd,f nsad ,fsnd/f snfslfhsd /f ksdjfk`,
 }))
 
 export default function App() {
+  const [options, setOptions] = useState() // [items, setItems
   const [value, setValue] = useState<Option>(null)
 
   console.log('value', value)
 
+  useEffect(() => {
+    setTimeout(() => {
+      setOptions(items)
+    }, 2000)
+  }, [])
+
   return (
     <div className='grid gap-8'>
+      <Index
+        isLoading
+        isSearchable
+        name='country'
+        value={value}
+        options={options}
+        onChange={(value) => setValue(value)}
+        onReachThreshold={() => console.info('onReachThreshold')}
+        classes={{
+          list: '!bg-red-200',
+          input: '!bg-blue-200',
+        }}
+      />
       <Index
         isLoading
         isSearchable
