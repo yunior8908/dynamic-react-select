@@ -27,6 +27,19 @@ export default function App() {
           input: '!bg-blue-200',
         }}
       />
+      <Index
+        isLoading
+        isSearchable
+        name='country'
+        value={value}
+        options={options}
+        onChange={(value) => setValue(value)}
+        onReachThreshold={() => console.info('onReachThreshold')}
+        classes={{
+          list: '!bg-red-200',
+          input: '!bg-blue-200',
+        }}
+      />
       <p className='text-pretty text-left text-black'>
         "The sun hung low in the sky, casting long shadows across the deserted street. A gentle breeze rustled through
         the trees, carrying with it the scent of freshly cut grass. Somewhere in the distance, a dog barked, its voice
