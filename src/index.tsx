@@ -105,7 +105,7 @@ export default function CustomSelect<Name extends string>({
   loadingLabel = 'loading',
 }: SelectProps<Name>) {
   const [selected, setSelected] = useState(value)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   const [filter, setFilter] = useState('')
 
