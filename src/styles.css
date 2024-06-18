@@ -52,6 +52,15 @@
   line-height: normal;
 }
 
+.select-wrapper button.select:disabled {
+  cursor: not-allowed;
+  color: #bbb;
+}
+
+.select-wrapper button.select:disabled span.icon {
+  opacity: 0.2;
+}
+
 .select-wrapper button.select span.text {
   /* text ellipsis */
   flex: 1;

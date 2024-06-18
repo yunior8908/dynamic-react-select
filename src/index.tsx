@@ -37,6 +37,7 @@ type SelectProps<Name extends string> = {
     listItemActive?: string
   }
   loadingLabel?: string
+  disabled?: true | false
 }
 
 const THRESHOLD = 3
@@ -92,6 +93,7 @@ export default function CustomSelect<Name extends string>({
   onReachThreshold,
   threshold = THRESHOLD, // Number of items before reaching the end, default is 3
   async = false,
+  disabled = false,
   classes = {
     root: '',
     select: '',
@@ -144,7 +146,13 @@ export default function CustomSelect<Name extends string>({
   return (
     <div ref={handleSelectRef} className={clsx('select-wrapper', classes.root)}>
       <input type='hidden' name={name} value={currentSelected?.value} />
-      <button type='button' className={clsx('select', classes.select)} role='select' onClick={() => setOpen(!open)}>
+      <button
+        disabled={disabled}
+        type='button'
+        className={clsx('select', classes.select)}
+        role='select'
+        onClick={() => setOpen(!open)}
+      >
         <span className='text'>
           {currentSelected?.value === undefined && isLoading && !open
             ? `${loadingLabel}...`

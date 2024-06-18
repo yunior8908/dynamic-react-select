@@ -35,6 +35,7 @@ export default function App() {
         }}
       />
       <Index
+        disabled
         isLoading
         isSearchable
         name='country'
