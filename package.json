@@ -1,6 +1,6 @@
 {
   "name": "dynamic-react-select",
-  "version": "0.0.111",
+  "version": "0.0.114",
   "description": "Simple dynamic react select",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
