@@ -7,7 +7,6 @@
   color: #333;
   font-size: 1rem;
   font-family: system-ui, sans-serif;
-  z-index: 10;
 }
 
 .select-wrapper ul {
@@ -97,6 +96,7 @@
   transition:
     max-height 0.3s ease,
     border 0.3s ease;
+  z-index: 100;
 }
 
 .select-wrapper ul {
